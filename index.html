@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Notion AI Operations Dashboard</title>
+<style>
+:root{--bg:#f6f7fb;--surface:#fff;--surface2:#f1f5f9;--border:#e2e8f0;--text:#0f172a;--muted:#64748b;--indigo:#6366f1;--indigo2:#818cf8;--green:#10b981;--red:#f43f5e;--amber:#f59e0b;--shadow:0 10px 30px rgba(15,23,42,.08);--grid:rgba(99,102,241,.10)}
+html[data-theme="dark"]{--bg:#0b0f19;--surface:#111827;--surface2:#182235;--border:rgba(148,163,184,.16);--text:#f8fafc;--muted:#94a3b8;--grid:rgba(129,140,248,.12);--shadow:0 20px 60px rgba(0,0,0,.28)}
+*{box-sizing:border-box}html{color-scheme:light}html[data-theme="dark"]{color-scheme:dark}body{margin:0;background:var(--bg);color:var(--text);font-family:Pretendard,Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:14px;line-height:1.5}
+button,input{font:inherit}.app{min-height:100vh;display:grid;grid-template-columns:224px minmax(0,1fr)}.sidebar{position:sticky;top:0;height:100vh;border-right:1px solid var(--border);background:color-mix(in srgb,var(--surface) 86%,transparent);backdrop-filter:blur(18px);padding:24px 16px;display:flex;flex-direction:column}.brand{display:flex;align-items:center;gap:11px;padding:0 8px 24px;font-weight:700;font-size:15px}.logo{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--indigo),#a855f7);box-shadow:0 8px 20px rgba(99,102,241,.32)}.nav{display:grid;gap:6px}.nav a{display:flex;align-items:center;gap:11px;min-height:42px;padding:0 12px;border-radius:9px;color:var(--muted);text-decoration:none;transition:.2s}.nav a:hover,.nav a.active{color:var(--text);background:var(--surface2)}.nav a.active{box-shadow:inset 2px 0 var(--indigo)}.nav svg{width:17px;height:17px}.sidebar-foot{margin-top:auto;padding:14px 10px;border-top:1px solid var(--border)}.user{display:flex;align-items:center;gap:10px}.avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#10b981,#6366f1)}.small{font-size:12px;color:var(--muted)}
+.main{min-width:0;padding:24px 28px 36px}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.eyebrow{font-size:12px;color:var(--muted);letter-spacing:.02em}.title{font-size:24px;line-height:1.25;margin:3px 0 0;font-weight:700;letter-spacing:-.03em}.actions{display:flex;gap:8px;align-items:center}.btn{min-height:40px;border:1px solid var(--border);border-radius:9px;padding:0 13px;background:var(--surface);color:var(--text);display:inline-flex;align-items:center;gap:8px;cursor:pointer;transition:.2s}.btn:hover{border-color:color-mix(in srgb,var(--indigo) 55%,var(--border));box-shadow:0 8px 25px rgba(99,102,241,.12)}.btn.primary{background:var(--indigo);color:#fff;border-color:var(--indigo)}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(16,185,129,.12)}.badge{font-size:11px;border-radius:999px;padding:3px 7px;background:rgba(99,102,241,.12);color:var(--indigo2);font-weight:600}.badge.green{background:rgba(16,185,129,.12);color:var(--green)}.badge.red{background:rgba(244,63,94,.12);color:var(--red)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:14px}.card{border:1px solid var(--border);background:var(--surface);border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.03);transition:.2s}.card:hover{border-color:rgba(99,102,241,.48);box-shadow:var(--shadow);transform:translateY(-1px)}.metric{padding:17px 18px 14px;min-height:128px}.metric-head{display:flex;justify-content:space-between;align-items:start}.metric-label{color:var(--muted);font-size:12px}.metric-value{font-size:25px;font-weight:700;letter-spacing:-.04em;margin:10px 0 9px}.spark{height:26px;display:flex;align-items:end;gap:3px}.spark i{display:block;flex:1;border-radius:2px 2px 0 0;background:linear-gradient(180deg,var(--indigo2),rgba(99,102,241,.18))}.meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)}
+.workspace{display:grid;grid-template-columns:minmax(0,.9fr) minmax(420px,1.35fr);gap:14px;margin-bottom:14px}.panel{padding:18px}.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.panel-title{font-size:14px;font-weight:650}.link{color:var(--indigo2);font-size:12px;text-decoration:none}.list{display:grid;gap:8px}.item{display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:10px;padding:9px;border:1px solid transparent;border-radius:9px;transition:.2s}.item:hover{background:var(--surface2);border-color:var(--border)}.doc-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:8px;background:rgba(99,102,241,.12);color:var(--indigo2);font-weight:700}.item-title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.item-sub{font-size:11px;color:var(--muted);margin-top:2px}.chart-wrap{height:221px;position:relative;border-radius:10px;background:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:100% 44px,56px 100%;overflow:hidden}.chart-wrap svg{position:absolute;inset:0;width:100%;height:100%}.chart-tools{display:flex;gap:6px}.seg{border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:7px;padding:5px 8px;font-size:11px;cursor:pointer}.seg.active{background:rgba(99,102,241,.13);color:var(--indigo2);border-color:rgba(99,102,241,.3)}.chart-legend{position:absolute;top:12px;left:12px;display:flex;gap:12px;font-size:11px;color:var(--muted)}.legend-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}.tooltip{position:absolute;left:61%;top:44px;padding:8px 10px;border-radius:8px;background:#0f172a;color:#fff;font-size:11px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.12)}
+.table-card{overflow:hidden}.table-head{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}.table-scroll{overflow:auto}table{width:100%;border-collapse:collapse;min-width:760px}th,td{text-align:left;padding:11px 18px;border-bottom:1px solid var(--border);font-size:12px}th{color:var(--muted);font-weight:500;background:color-mix(in srgb,var(--surface2) 38%,transparent)}tbody tr:hover{background:color-mix(in srgb,var(--surface2) 58%,transparent)}tbody tr:last-child td{border-bottom:0}.status{display:inline-flex;align-items:center;gap:6px}.status:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green)}.status.failed:before{background:var(--red)}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted)}
+.skeleton{display:none;gap:8px}.loading .content{display:none}.loading .skeleton{display:grid}.sk{height:42px;border-radius:8px;background:linear-gradient(90deg,var(--surface2),color-mix(in srgb,var(--surface2) 55%,var(--surface)),var(--surface2));background-size:200% 100%;animation:shimmer 1.2s infinite}.empty{display:none;text-align:center;padding:36px 20px;color:var(--muted)}.empty .empty-icon{width:42px;height:42px;border-radius:12px;background:rgba(99,102,241,.12);color:var(--indigo2);display:grid;place-items:center;margin:0 auto 10px;font-size:20px}@keyframes shimmer{to{background-position:-200% 0}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+@media(max-width:1100px){.app{grid-template-columns:76px minmax(0,1fr)}.sidebar{padding:24px 10px}.brand span,.nav span,.sidebar-foot .user>div:last-child{display:none}.brand{justify-content:center}.nav a{justify-content:center}.kpis{grid-template-columns:repeat(2,1fr)}.workspace{grid-template-columns:1fr}}
+@media(max-width:650px){.app{display:block}.sidebar{position:fixed;z-index:20;top:auto;bottom:0;width:100%;height:68px;border-right:0;border-top:1px solid var(--border);padding:8px 12px;display:block}.brand,.sidebar-foot{display:none}.nav{grid-template-columns:repeat(4,1fr)}.nav a{min-height:50px}.main{padding:20px 16px 88px}.topbar{align-items:flex-start;gap:12px}.actions .btn span:not(.dot){display:none}.actions .btn .dot{display:block}.title{font-size:21px}.kpis{grid-template-columns:1fr 1fr;gap:10px}.metric{min-height:116px;padding:14px}.metric-value{font-size:21px}.workspace{grid-template-columns:1fr}.panel{padding:15px}.chart-wrap{height:190px}.tooltip{display:none}.table-head{align-items:flex-start;gap:12px}th,td{padding:11px 14px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" aria-label="주요 메뉴">
+  <div class="brand"><div class="logo">N</div><span>Notion AI Ops</span></div>
+  <nav class="nav">
+    <a class="active" href="#overview" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg><span>Overview</span></a>
+    <a href="#pages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></svg><span>AI Pages</span></a>
+    <a href="#analytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9m6 10V5m6 14v-7m4 7H2"/></svg><span>Analytics</span></a>
+    <a href="#logs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 12h16M4 19h10"/></svg><span>Logs</span></a>
+  </nav>
+  <div class="sidebar-foot"><div class="user"><div class="avatar"></div><div><strong>한잔의여유</strong><div class="small">Workspace admin</div></div></div></div>
+</aside>
+<main class="main" id="overview">
+  <header class="topbar">
+    <div><div class="eyebrow">AI workspace · <span class="badge">DEMO DATA</span></div><h1 class="title">Operations overview</h1></div>
+    <div class="actions"><button class="btn" id="refresh"><span class="dot"></span><span>Live sync</span></button><button class="btn" id="theme" aria-label="테마 전환">☼</button><button class="btn primary"><span>New prompt</span>＋</button></div>
+  </header>
+
+  <section class="kpis" aria-label="핵심 성과 지표">
+    <article class="card metric"><div class="metric-head"><span class="metric-label">오늘의 AI 실행</span><span class="badge green">+12.4%</span></div><div class="metric-value">1,284</div><div class="spark" aria-hidden="true"><i style="height:28%"></i><i style="height:48%"></i><i style="height:38%"></i><i style="height:65%"></i><i style="height:55%"></i><i style="height:79%"></i><i style="height:92%"></i></div></article>
+    <article class="card metric"><div class="metric-head"><span class="metric-label">작업 성공률</span><span class="badge green">+1.8%</span></div><div class="metric-value">98.7%</div><div class="meta"><span class="dot"></span>정상 범위 · 목표 97%</div></article>
+    <article class="card metric"><div class="metric-head"><span class="metric-label">토큰 잔여량</span><span class="badge">62%</span></div><div class="metric-value">78.4k</div><div style="height:6px;border-radius:6px;background:var(--surface2);overflow:hidden"><div style="height:100%;width:62%;background:linear-gradient(90deg,var(--indigo),var(--indigo2))"></div></div><div class="meta" style="margin-top:8px">이번 주 할당량 기준</div></article>
+    <article class="card metric"><div class="metric-head"><span class="metric-label">평균 응답 시간</span><span class="badge green">−0.3s</span></div><div class="metric-value">1.8s</div><div class="spark" aria-hidden="true"><i style="height:88%"></i><i style="height:72%"></i><i style="height:76%"></i><i style="height:55%"></i><i style="height:58%"></i><i style="height:42%"></i><i style="height:36%"></i></div></article>
+  </section>
+
+  <section class="workspace">
+    <article class="card panel" id="pages">
+      <div class="panel-head"><div><div class="panel-title">최근 AI 페이지</div><div class="small">최종 수정 순</div></div><a class="link" href="#">전체 보기 →</a></div>
+      <div class="content list">
+        <div class="item"><div class="doc-icon">A</div><div><div class="item-title">주식 매매일지 PRO 개선안</div><div class="item-sub">Trading OS · 8분 전</div></div><span class="badge green">Ready</span></div>
+        <div class="item"><div class="doc-icon">A</div><div><div class="item-title">건축 프로젝트 리스크 요약</div><div class="item-sub">Architecture · 24분 전</div></div><span class="badge">Review</span></div>
+        <div class="item"><div class="doc-icon">A</div><div><div class="item-title">인스타그램 콘텐츠 검수</div><div class="item-sub">Content · 1시간 전</div></div><span class="badge green">Ready</span></div>
+        <div class="item"><div class="doc-icon">A</div><div><div class="item-title">AI 문서 허브 분류 작업</div><div class="item-sub">AI Hub · 3시간 전</div></div><span class="badge">Draft</span></div>
+      </div>
+      <div class="skeleton"><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>
+      <div class="empty"><div class="empty-icon">✦</div><strong>아직 실행 기록이 없습니다</strong><div class="small">새 프롬프트를 실행하면 여기에 표시됩니다.</div></div>
+    </article>
+
+    <article class="card panel" id="analytics">
+      <div class="panel-head"><div><div class="panel-title">AI 사용량 및 응답 속도</div><div class="small">최근 7일 · 요청 수 / 평균 지연</div></div><div class="chart-tools"><button class="seg active">7D</button><button class="seg">30D</button><button class="seg">90D</button></div></div>
+      <div class="chart-wrap" role="img" aria-label="최근 7일 AI 요청량이 증가하고 응답 시간이 감소하는 추세">
+        <div class="chart-legend"><span><i class="legend-dot" style="background:#818cf8"></i>Requests</span><span><i class="legend-dot" style="background:#10b981"></i>Latency</span></div>
+        <svg viewBox="0 0 700 240" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6366f1" stop-opacity=".36"/><stop offset="1" stop-color="#6366f1" stop-opacity="0"/></linearGradient></defs>
+          <path d="M0 193 C75 188,85 155,150 164 S245 120,300 133 S390 89,450 104 S555 72,600 78 S665 45,700 51 L700 240 L0 240Z" fill="url(#fill)"/>
+          <path d="M0 193 C75 188,85 155,150 164 S245 120,300 133 S390 89,450 104 S555 72,600 78 S665 45,700 51" fill="none" stroke="#818cf8" stroke-width="3" vector-effect="non-scaling-stroke"/>
+          <path d="M0 72 C90 77,110 88,170 84 S265 111,325 105 S410 132,470 126 S575 158,620 151 S680 172,700 168" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="5 5" vector-effect="non-scaling-stroke"/>
+          <circle cx="450" cy="104" r="5" fill="#818cf8" stroke="#fff" stroke-width="2"/><circle cx="450" cy="126" r="4" fill="#10b981" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="tooltip"><strong>Thu · 10:00</strong><br>Requests 184 · 1.9s</div>
+      </div>
+    </article>
+  </section>
+
+  <section class="card table-card" id="logs">
+    <div class="table-head"><div><div class="panel-title">최근 실행 로그</div><div class="small">프롬프트 상태와 처리 성능</div></div><div class="actions"><button class="seg active" data-filter="all">All</button><button class="seg" data-filter="success">Success</button><button class="seg" data-filter="failed">Failed</button></div></div>
+    <div class="table-scroll"><table><thead><tr><th>Prompt</th><th>Workspace</th><th>Status</th><th>Model</th><th>Tokens</th><th>Duration</th><th>Executed</th></tr></thead><tbody>
+      <tr data-status="success"><td><strong>주간 거래 복기 요약</strong></td><td>Stock Trading</td><td><span class="status">Success</span></td><td class="mono">GPT-5</td><td>2,184</td><td>1.4s</td><td class="small">2분 전</td></tr>
+      <tr data-status="success"><td><strong>프로젝트 지연 리스크 추출</strong></td><td>Architecture</td><td><span class="status">Success</span></td><td class="mono">GPT-5</td><td>4,902</td><td>2.1s</td><td class="small">18분 전</td></tr>
+      <tr data-status="failed"><td><strong>릴스 캡션 생성</strong></td><td>Content</td><td><span class="status failed">Failed</span></td><td class="mono">GPT-5 mini</td><td>—</td><td>4.8s</td><td class="small">31분 전</td></tr>
+      <tr data-status="success"><td><strong>문서 태그 자동 분류</strong></td><td>AI Hub</td><td><span class="status">Success</span></td><td class="mono">GPT-5 mini</td><td>1,062</td><td>0.9s</td><td class="small">1시간 전</td></tr>
+    </tbody></table></div>
+  </section>
+</main>
+</div>
+<script>
+const root=document.documentElement;document.getElementById('theme').onclick=()=>{const next=root.dataset.theme==='dark'?'light':'dark';root.dataset.theme=next;document.getElementById('theme').textContent=next==='dark'?'☼':'◐'};
+document.getElementById('refresh').onclick=()=>{const panel=document.querySelector('#pages');panel.classList.add('loading');setTimeout(()=>panel.classList.remove('loading'),1100)};
+document.querySelectorAll('[data-filter]').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('[data-filter]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('tbody tr').forEach(row=>row.hidden=btn.dataset.filter!=='all'&&row.dataset.status!==btn.dataset.filter)});
+document.querySelectorAll('.chart-tools .seg').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('.chart-tools .seg').forEach(b=>b.classList.remove('active'));btn.classList.add('active')});
+</script>
+</body>
+</html>
